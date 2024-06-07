@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "319907892766",
+    "project_id": "clueful-e268d",
+    "storage_bucket": "clueful-e268d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319907892766:android:6e6a28268fe2a59907680f",
+        "android_client_info": {
+          "package_name": "com.example.flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZMXDgdj2iXHgo9x2dc8fyYpnjb8nwBRM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
