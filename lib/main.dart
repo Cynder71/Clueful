@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/navigation_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +13,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
+
+  final storage = FirebaseStorage.instance;
+
 }
 
 class MyApp extends StatelessWidget {
