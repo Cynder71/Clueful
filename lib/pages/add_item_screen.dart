@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/utils/FirebaseStorageService.dart';
+import 'package:flutter_app/utils/ImagePickerService.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddItem extends StatefulWidget {
@@ -19,7 +21,7 @@ class _AddItemState extends State<AddItem> {
   final picker = ImagePicker();
 
   Future<void> _pickImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePickerService.pickImage();
 
     setState(() {
       if (pickedFile != null) {
@@ -28,17 +30,9 @@ class _AddItemState extends State<AddItem> {
     });
   }
 
-  Future<String> _uploadImage(File image) async {
-    String filename = DateTime.now().millisecondsSinceEpoch.toString();
-    Reference storageRef = FirebaseStorage.instance.ref().child('items/$filename');
-    UploadTask uploadTask = storageRef.putFile(image);
-    TaskSnapshot snapshot = await uploadTask;
-    return await snapshot.ref.getDownloadURL();
-  }
-
   Future<void> _uploadItem() async {
     if (_formKey.currentState!.validate() && _image != null) {
-      String imageUrl = await _uploadImage(_image!);
+      String imageUrl = await FirebaseStorageService.uploadImage(_image!);
       await FirebaseFirestore.instance.collection('items').add({
         'name': _nameController.text,
         'imageUrl': imageUrl

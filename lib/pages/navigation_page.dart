@@ -7,7 +7,6 @@ import 'package:flutter_app/pages/wardrobe_screen.dart';
 import 'package:flutter_app/pages/add_item_screen.dart';
 
 
-
 class NavigationPage extends StatefulWidget {
   const NavigationPage({super.key});
 
@@ -26,7 +25,7 @@ const List<Widget> screens = [
   HomeScreen(),
   WardrobeScreen(),
   CalendarScreen(),
-  ProfileScreen()
+  ProfileScreen(),
 ];
 
 
