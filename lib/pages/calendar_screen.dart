@@ -11,6 +11,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor:  Color.fromARGB(255, 241, 221, 207),
       body: Center(
         child: Text('CALENDAR SCREEN'),
       ),

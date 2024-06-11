@@ -47,13 +47,17 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
       'name' : _nameController.text
     });
 
-    Navigator.pop(context);
+    if(mounted){
+      Navigator.pop(context);
+    }
   }
 
   Future<void> _deleteItem() async {
     await FirebaseStorage.instance.refFromURL(widget.item.imageUrl).delete();
     await itemsRef.doc(widget.item.id).delete();
-    Navigator.pop(context);
+    if(mounted){
+      Navigator.pop(context);
+    }
   }
 
   Future<void> _pickImage() async {

@@ -35,8 +35,9 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 241, 221, 207),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 186, 144, 198),
+        backgroundColor: const Color.fromARGB(255, 251, 174, 210),
          onPressed: () {
         // Navigate to AddItem screen
           Navigator.push(
@@ -45,13 +46,13 @@ class _NavigationPageState extends State<NavigationPage> {
          );
         },
         shape: const CircleBorder(), // Use CircleBorder for a circular shape
-        child: const Icon(Icons.add, color: Colors.black,),
+        child: const Icon(Icons.add, color: Color.fromARGB(255,48, 25, 52)),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-        inactiveColor: const Color.fromARGB(255, 186, 144, 198),
-        activeColor:  const Color.fromARGB(255, 253, 244, 245),
+        backgroundColor: const Color.fromARGB(255, 58, 25, 52),
+        inactiveColor: const Color.fromARGB(255, 241, 221, 207),
+        activeColor:  const Color.fromARGB(255, 251, 174, 210),
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.softEdge,
         icons: iconList,

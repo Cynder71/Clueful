@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/add_form.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 //import 'add_form.dart'; // Importe a página AddClothes
 
 class ChoicePage extends StatelessWidget {
@@ -8,23 +10,23 @@ class ChoicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 241, 221, 207),
       appBar: AppBar(
-        title: const Text('Escolha o que deseja'),
-        backgroundColor: const Color.fromARGB(255, 186, 144, 198),
+        title: Text(
+          'Escolha o que deseja',
+          style: GoogleFonts.cinzel(
+            color: const Color.fromARGB(255, 241, 221, 207),
+            fontWeight: FontWeight.w500,
+            ),
+          ),
+        backgroundColor: const Color.fromARGB(255, 58, 25, 52),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          color: const Color.fromARGB(255, 241, 221, 207),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
       ),
       body: Center(
         child: Padding(
@@ -34,7 +36,7 @@ class ChoicePage extends StatelessWidget {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 186, 144, 198),
+                  backgroundColor:const Color.fromARGB(255, 58, 25, 52),
                   minimumSize: const Size(150, 150),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.0),
@@ -49,16 +51,23 @@ class ChoicePage extends StatelessWidget {
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.checkroom, size: 50),
+                    Icon(
+                      Icons.checkroom, 
+                      size: 50,
+                      color: Color.fromARGB(255, 241, 221, 207),
+                      ),
                     SizedBox(height: 8),
-                    Text('Adicionar roupa'),
+                    Text(
+                      'Adicionar roupa',
+                      style: TextStyle(color: Color.fromARGB(255, 241, 221, 207)),
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 186, 144, 198),
+                  backgroundColor: const Color.fromARGB(255, 58, 25, 52),
                   minimumSize: const Size(150, 150),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.0),
@@ -73,9 +82,16 @@ class ChoicePage extends StatelessWidget {
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.star, size: 50),
+                    Icon(
+                     Icons.star,
+                     size: 50,
+                     color: Color.fromARGB(255, 241, 221, 207),
+                     ),
                     SizedBox(height: 8),
-                    Text('Adicionar look'),
+                    Text(
+                      'Adicionar look',
+                      style: TextStyle(color: Color.fromARGB(255, 241, 221, 207)),
+                      ),
                   ],
                 ),
               ),

@@ -150,6 +150,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/Item.dart';
 import 'package:flutter_app/pages/item_detail_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class WardrobeScreen extends StatelessWidget {
   const WardrobeScreen({super.key});
@@ -157,11 +159,19 @@ class WardrobeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 241, 221, 207),
       appBar: AppBar(
-        title: const Text('Nova roupa'),
-        backgroundColor: const Color.fromARGB(255, 186, 144, 198),
+        title: Text(
+          'Meu Guarda-Roupa',
+          style: GoogleFonts.cinzel(
+            color: const Color.fromARGB(255, 241, 221, 207),
+            fontWeight: FontWeight.w500,
+            ),
+          ),
+        backgroundColor:  const Color.fromARGB(255, 58, 25, 52),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          color: const Color.fromARGB(255, 241, 221, 207),
           onPressed: () {
             Navigator.of(context).pop();
           },
