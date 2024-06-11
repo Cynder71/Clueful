@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_app/pages/wardrobe_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -47,37 +48,60 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(left: 25),
-                child: Text(
-                  'Veja aqui o seu look do dia!',
-                  style: GoogleFonts.lora(
-                    fontSize: 22,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      'Veja aqui o seu look do dia!',
+                      style: GoogleFonts.lora(
+                        fontSize: 22,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.arrow_forward,
+                          color: Color.fromARGB(255, 58, 25, 52)),
+                      iconSize: 20,
+                      onPressed: () {},
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 30),
-              Row(
-                children: [
-                  Image.asset(
-                    'images/teste.png',
-                    height: 240,
-                    width: 240,
+              Padding(
+                padding: const EdgeInsets.only(left: 25),
+                child: Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 58, 25, 52),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_forward,
-                        color: Color.fromARGB(255, 58, 25, 52)),
-                    iconSize: 40,
-                    onPressed: () {},
-                  ),
-                ],
+                  // Child widget or content inside the container
+                ),
               ),
               const SizedBox(height: 35),
               Padding(
                 padding: const EdgeInsets.only(left: 25),
-                child: Text(
-                  'Veja outras combinações',
-                  style: GoogleFonts.lora(
-                    fontSize: 22,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      'Veja aqui suas roupas',
+                      style: GoogleFonts.lora(
+                        fontSize: 22,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.arrow_forward,
+                          color: Color.fromARGB(255, 58, 25, 52)),
+                      iconSize: 20,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const WardrobeScreen()),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 25),
