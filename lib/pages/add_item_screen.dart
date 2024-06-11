@@ -16,14 +16,6 @@ class ChoicePage extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
       ),
       body: Center(
         child: Padding(

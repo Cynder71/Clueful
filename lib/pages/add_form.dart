@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/FirebaseStorageService.dart';
-import 'package:flutter_app/utils/ImagePickerService.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddItem extends StatefulWidget {
@@ -93,14 +92,6 @@ class _AddItemState extends State<AddItem> {
             Navigator.of(context).pop();
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -128,19 +119,20 @@ class _AddItemState extends State<AddItem> {
                               child: SizedBox(
                                 width: 300,
                                 height: 300,
-                                child: Container(
-                                  width: 150,
-                                  height: 150,
-                                  color: Colors.grey[300],
-                                  child: _imageFile == null
-                                      ? const Icon(Icons.camera_alt, size: 50)
-                                      : Image.file(
-                                          _imageFile!,
-                                          fit: BoxFit.cover,
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                        ),
-                                ),
+                                  child: Container(
+                                    width: 300,
+                                    height: 300,
+                                    color: Colors.grey[300],
+                                    child: _imageFile == null
+                                        ? const Icon(Icons.camera_alt, size: 50)
+                                        : Image.file(
+                                            _imageFile!,
+                                            fit: BoxFit.cover,
+                                            width: double.infinity,
+                                            height: double.infinity,
+                                          ),
+                                    ),
+                                  
                               ),
                             ),
                             Positioned(
