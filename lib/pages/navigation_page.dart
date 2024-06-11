@@ -41,7 +41,7 @@ class _NavigationPageState extends State<NavigationPage> {
         // Navigate to AddItem screen
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddItem()), // Replace with your AddItem widget
+            MaterialPageRoute(builder: (context) => const ChoicePage()), // Replace with your AddItem widget
          );
         },
         shape: const CircleBorder(), // Use CircleBorder for a circular shape

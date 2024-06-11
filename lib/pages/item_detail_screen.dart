@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/Item.dart';
 import 'package:flutter_app/utils/FirebaseStorageService.dart';
@@ -12,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 class ItemDetailScreen extends StatefulWidget {
   final Item item;
 
-  ItemDetailScreen({required this.item});
+  const ItemDetailScreen({super.key, required this.item});
 
   @override
   State<ItemDetailScreen> createState() => _ItemDetailScreenState();
@@ -77,7 +76,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -89,7 +88,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
             const SizedBox(height: 20,),
             TextFormField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'Nome'),
+              decoration: const InputDecoration(labelText: 'Nome'),
             ),
             const SizedBox(height: 20,),
             ElevatedButton(onPressed: _updateItem, child: const Icon(Icons.save))
