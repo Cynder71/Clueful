@@ -38,16 +38,12 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
   Future<void> _updateItem() async {
     if (_newImage != null) {
       String imageUrl = await FirebaseStorageService.uploadImage(_newImage!);
-      await itemsRef.doc(widget.item.id).update({
-        'imageUrl': imageUrl
-      });
+      await itemsRef.doc(widget.item.id).update({'imageUrl': imageUrl});
     }
 
-    await itemsRef.doc(widget.item.id).update({
-      'name' : _nameController.text
-    });
+    await itemsRef.doc(widget.item.id).update({'name': _nameController.text});
 
-    if(mounted){
+    if (mounted) {
       Navigator.pop(context);
     }
   }
@@ -55,7 +51,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
   Future<void> _deleteItem() async {
     await FirebaseStorage.instance.refFromURL(widget.item.imageUrl).delete();
     await itemsRef.doc(widget.item.id).delete();
-    if(mounted){
+    if (mounted) {
       Navigator.pop(context);
     }
   }
@@ -79,24 +75,35 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
           IconButton(onPressed: _deleteItem, icon: const Icon(Icons.delete))
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _newImage != null ?
-                Image.file(_newImage!)
-                : Image.network(widget.item.imageUrl),
-            const SizedBox(height: 20.0,),
-            ElevatedButton(onPressed: _pickImage, child: const Text('Escolher nova imagem')),
-            const SizedBox(height: 20,),
-            TextFormField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Nome'),
-            ),
-            const SizedBox(height: 20,),
-            ElevatedButton(onPressed: _updateItem, child: const Icon(Icons.save))
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _newImage != null
+                  ? Image.file(_newImage!)
+                  : Image.network(widget.item.imageUrl),
+              const SizedBox(
+                height: 20.0,
+              ),
+              ElevatedButton(
+                  onPressed: _pickImage,
+                  child: const Text('Escolher nova imagem')),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: 'Nome'),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  onPressed: _updateItem, child: const Icon(Icons.save))
+            ],
+          ),
         ),
       ),
     );

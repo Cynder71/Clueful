@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/FirebaseStorageService.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddItem extends StatefulWidget {
   const AddItem({super.key});
@@ -82,11 +83,19 @@ class _AddItemState extends State<AddItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 241, 221, 207),
       appBar: AppBar(
-        title: const Text('Nova roupa'),
-        backgroundColor: const Color.fromARGB(255, 186, 144, 198),
+        title: Text(
+          'Adicionar nova roupa',
+          style: GoogleFonts.cinzel(
+            color: const Color.fromARGB(255, 241, 221, 207),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 58, 25, 52),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
+          color: const Color.fromARGB(255, 241, 221, 207),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -121,7 +130,8 @@ class _AddItemState extends State<AddItem> {
                                 child: Container(
                                   width: 400,
                                   height: 300,
-                                  color: Colors.grey[300],
+                                  color:
+                                      const Color.fromARGB(255, 255, 243, 234),
                                   child: _imageFile == null
                                       ? const Icon(Icons.camera_alt, size: 50)
                                       : Image.file(
@@ -139,7 +149,7 @@ class _AddItemState extends State<AddItem> {
                               child: FloatingActionButton(
                                 mini: true,
                                 backgroundColor:
-                                    const Color.fromARGB(255, 186, 144, 198),
+                                    const Color.fromARGB(255, 58, 25, 52),
                                 onPressed: _showImageSourceActionSheet,
                                 child:
                                     const Icon(Icons.edit, color: Colors.white),
@@ -186,8 +196,9 @@ class _AddItemState extends State<AddItem> {
                                 });
                               },
                               selectedColor:
-                                  const Color.fromARGB(255, 186, 144, 198),
-                              backgroundColor: Colors.grey[200],
+                                  const Color.fromARGB(255, 251, 174, 210),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 255, 243, 234),
                             );
                           }).toList(),
                         ),
@@ -233,7 +244,7 @@ class _AddItemState extends State<AddItem> {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 186, 144, 198),
+                    backgroundColor: const Color.fromARGB(255, 58, 25, 52),
                   ),
                   onPressed: _uploadItem,
                   child: AnimatedBuilder(
@@ -242,10 +253,14 @@ class _AddItemState extends State<AddItem> {
                         return loading.value
                             ? const SizedBox(
                                 width: 20,
-                                height: 20,
+                                height: 35,
                                 child: CircularProgressIndicator(),
                               )
-                            : const Text('Adicionar');
+                            : const Text(
+                                'Adicionar',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 241, 221, 207)),
+                              );
                       }),
                 ),
               ],
