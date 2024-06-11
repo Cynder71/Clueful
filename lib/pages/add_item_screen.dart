@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'add_form.dart'; // Importe a página AddClothes
+import 'package:flutter_app/pages/add_form.dart';
+//import 'add_form.dart'; // Importe a página AddClothes
 
 class ChoicePage extends StatelessWidget {
   const ChoicePage({super.key});
@@ -16,6 +17,14 @@ class ChoicePage extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Padding(

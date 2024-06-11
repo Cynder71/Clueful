@@ -19,6 +19,7 @@ class _AddItemState extends State<AddItem> {
   final _nameController = TextEditingController();
   File? _imageFile;
   final ImagePicker imagePicker = ImagePicker();
+  final loading = ValueNotifier<bool>(false);
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await imagePicker.pickImage(source: source);
@@ -31,25 +32,23 @@ class _AddItemState extends State<AddItem> {
   }
 
   Future<void> _uploadItem() async {
-  if (_formKey.currentState!.validate() && _imageFile != null) {
-    String imageUrl = await FirebaseStorageService.uploadImage(_imageFile!);
-    await FirebaseFirestore.instance.collection('items').add({
-      'name': _nameController.text,
-      'imageUrl': imageUrl
-    });
-    
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Roupa salva! :D')),
-      );
-      Navigator.pop(context);
+    if (_formKey.currentState!.validate() && _imageFile != null) {
+      loading.value = true;
+      String imageUrl = await FirebaseStorageService.uploadImage(_imageFile!);
+      await FirebaseFirestore.instance
+          .collection('items')
+          .add({'name': _nameController.text, 'imageUrl': imageUrl});
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Roupa salva! :D')),
+        );
+        Navigator.pop(context);
+      }
     }
-    
   }
-}
 
-
- void _showImageSourceActionSheet() {
+  void _showImageSourceActionSheet() {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -117,22 +116,21 @@ class _AddItemState extends State<AddItem> {
                             GestureDetector(
                               onTap: _showImageSourceActionSheet,
                               child: SizedBox(
-                                width: 300,
+                                width: 400,
                                 height: 300,
-                                  child: Container(
-                                    width: 300,
-                                    height: 300,
-                                    color: Colors.grey[300],
-                                    child: _imageFile == null
-                                        ? const Icon(Icons.camera_alt, size: 50)
-                                        : Image.file(
-                                            _imageFile!,
-                                            fit: BoxFit.cover,
-                                            width: double.infinity,
-                                            height: double.infinity,
-                                          ),
-                                    ),
-                                  
+                                child: Container(
+                                  width: 400,
+                                  height: 300,
+                                  color: Colors.grey[300],
+                                  child: _imageFile == null
+                                      ? const Icon(Icons.camera_alt, size: 50)
+                                      : Image.file(
+                                          _imageFile!,
+                                          fit: BoxFit.cover,
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                        ),
+                                ),
                               ),
                             ),
                             Positioned(
@@ -238,8 +236,17 @@ class _AddItemState extends State<AddItem> {
                     backgroundColor: const Color.fromARGB(255, 186, 144, 198),
                   ),
                   onPressed: _uploadItem,
-                  child: const Text('Adicionar'),
-                  
+                  child: AnimatedBuilder(
+                      animation: loading,
+                      builder: (context, _) {
+                        return loading.value
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(),
+                              )
+                            : const Text('Adicionar');
+                      }),
                 ),
               ],
             ),
@@ -248,4 +255,4 @@ class _AddItemState extends State<AddItem> {
       ),
     );
   }
- }
+}
