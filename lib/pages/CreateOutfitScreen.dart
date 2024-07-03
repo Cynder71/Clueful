@@ -102,9 +102,10 @@ class CreateOutfitScreenState extends State<CreateOutfitScreen> {
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/rendering.dart'; // Import necessário para capturar a renderização
+import 'package:flutter/rendering.dart';
 import 'package:flutter_app/models/Item.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_app/pages/add_item_screen.dart';
 
 class CreateOutfitScreen extends StatefulWidget {
   final List<Item> selectedItems;
@@ -122,6 +123,7 @@ class CreateOutfitScreenState extends State<CreateOutfitScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 241, 221, 207),
       appBar: AppBar(
         title: Text(
           'Criar Outfit',
@@ -130,10 +132,18 @@ class CreateOutfitScreenState extends State<CreateOutfitScreen> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: const Color.fromARGB(255, 58, 25, 52),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: const Color.fromARGB(255, 241, 221, 207),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
+            color: const Color.fromARGB(255, 241, 221, 207),
             onPressed: _saveOutfit,
           ),
         ],
@@ -211,7 +221,10 @@ class CreateOutfitScreenState extends State<CreateOutfitScreen> {
     });
 
     if (mounted) {
-      Navigator.of(context).pop();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ChoicePage()),
+      );
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Outfit salvo com sucesso!')),
       );
