@@ -1,3 +1,4 @@
+//Código com canvas
 /*import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/models/Item.dart';
@@ -130,11 +131,13 @@ class SelectClothesScreenState extends State<SelectClothesScreen> {
     );
   }
 }*/
+
+//Código com carrossel
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/models/Item.dart';
-import 'package:flutter_app/pages/CreateOutfitScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_app/pages/CreateOutfitScreen.dart';
 
 class SelectClothesScreen extends StatefulWidget {
   final Key? key;
@@ -146,7 +149,8 @@ class SelectClothesScreen extends StatefulWidget {
 }
 
 class SelectClothesScreenState extends State<SelectClothesScreen> {
-  List<Item> selectedItems = [];
+  List<String> selectedItemsIds = [];
+  List<Item> items = [];
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +173,7 @@ class SelectClothesScreenState extends State<SelectClothesScreen> {
             return const Center(child: CircularProgressIndicator());
           }
 
-          var items = snapshot.data!.docs.map((doc) {
+          items = snapshot.data!.docs.map((doc) {
             return Item.fromMap(doc.data() as Map<String, dynamic>, doc.id);
           }).toList();
 
@@ -184,20 +188,17 @@ class SelectClothesScreenState extends State<SelectClothesScreen> {
             itemCount: items.length,
             itemBuilder: (context, index) {
               var item = items[index];
-              bool isSelected = selectedItems.contains(item);
+              bool isSelected = selectedItemsIds.contains(item.id);
 
               return GestureDetector(
                 onTap: () {
                   setState(() {
                     if (isSelected) {
-                      selectedItems.remove(item);
-                      print("desfeito");
+                      selectedItemsIds.remove(item.id);
                     } else {
-                      selectedItems.add(item);
-                      print("feito");
+                      selectedItemsIds.add(item.id);
                     }
                   });
-                  print(selectedItems);
                 },
                 child: Stack(
                   children: [
@@ -238,7 +239,7 @@ class SelectClothesScreenState extends State<SelectClothesScreen> {
                         top: 5,
                         right: 5,
                         child: Icon(Icons.check_circle,
-                            color: Colors.purple, size: 30),
+                            color: Color.fromARGB(255, 224, 33, 122)),
                       ),
                   ],
                 ),
@@ -257,8 +258,10 @@ class SelectClothesScreenState extends State<SelectClothesScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  CreateOutfitScreen(selectedItems: selectedItems),
+              builder: (context) => CreateOutfitScreen(
+                  selectedItems: selectedItemsIds.map((id) {
+                return items.firstWhere((item) => item.id == id);
+              }).toList()),
             ),
           );
         },
