@@ -157,15 +157,21 @@ class SelectClothesScreenState extends State<SelectClothesScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 241, 221, 207),
       appBar: AppBar(
-        title: Text(
-          'Selecione Roupas',
-          style: GoogleFonts.cinzel(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
+          title: Text(
+            'Selecione Roupas',
+            style: GoogleFonts.cinzel(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 58, 25, 52),
-      ),
+          backgroundColor: const Color.fromARGB(255, 58, 25, 52),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: const Color.fromARGB(255, 241, 221, 207),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('items').snapshots(),
         builder: (context, snapshot) {
@@ -252,7 +258,7 @@ class SelectClothesScreenState extends State<SelectClothesScreen> {
         backgroundColor: const Color.fromARGB(255, 58, 25, 52),
         child: const Icon(
           Icons.check,
-          color: Colors.white,
+          color: Color.fromARGB(255, 241, 221, 207),
         ),
         onPressed: () {
           Navigator.push(
