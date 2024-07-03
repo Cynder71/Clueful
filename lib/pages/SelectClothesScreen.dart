@@ -191,10 +191,10 @@ class SelectClothesScreenState extends State<SelectClothesScreen> {
                   setState(() {
                     if (isSelected) {
                       selectedItems.remove(item);
-                      print("ta");
+                      print("desfeito");
                     } else {
                       selectedItems.add(item);
-                      print("n ta");
+                      print("feito");
                     }
                   });
                   print(selectedItems);
