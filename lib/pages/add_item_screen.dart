@@ -79,7 +79,8 @@ class ChoicePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SelectClothesScreen()),
+                        builder: (context) =>
+                            const SelectClothesScreen(origin: 'ChoicePage')),
                   );
                 },
                 child: const Column(
