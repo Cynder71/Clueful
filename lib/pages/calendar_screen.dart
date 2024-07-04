@@ -1,7 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/SelectClothesScreen.dart';
 import 'package:flutter_app/pages/event.dart';
+import 'package:flutter_app/pages/select_outfit_screen.dart';
+import 'package:flutter_app/pages/wardrobe_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import '../models/Outfit.dart';
 
 
 class CalendarScreen extends StatefulWidget {
@@ -21,8 +27,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   
 
-  final TextEditingController _eventController = TextEditingController();
-
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay){
     if(!isSameDay(_selectedDay, selectedDay)){
       setState(() {
@@ -33,7 +37,43 @@ class _CalendarScreenState extends State<CalendarScreen> {
     }
   }
 
-  
+  void _selectOutfitForDate() {
+    if (_selectedDay == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Por favor, selecione um dia no calendário primeiro.'))
+      );
+      return;
+    }
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SelectOutfitScreen(
+                onSelect: (Outfit outfit) {
+                  _createDateOutfit(_selectedDay!, outfit);
+                }
+            )
+        )
+    );
+  }
+
+  void _createDateOutfit(DateTime date, Outfit outfit) {
+    FirebaseFirestore.instance.collection('dateOutfits').add({
+      'date': date.toIso8601String(),
+      'outfitId': outfit.id,
+    }).then((docRef) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Outfit agendado para ${date.toIso8601String()}'))
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao agendar outfit: $error'))
+      );
+    });
+  }
+
+
+
 
   @override
   void initState(){
@@ -64,33 +104,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       ),
       backgroundColor: const Color.fromARGB(255, 241, 221, 207),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                scrollable: true,
-                title: const Text("Event Name"),
-                  content: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextField(
-                      controller: _eventController,
-                    ),
-                  ),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: (){
-                        events.addAll({_selectedDay!: [Event(_eventController.text)]});
-                        Navigator.of(context).pop();
-                        _selectedEvents.value = _getEventsForDay(_selectedDay!);
-                      },
-                      child: const Text("Submit")
-                      )
-                  ],
-              );
-            }
-          );
-        },
+        onPressed: _selectOutfitForDate,
         child:const Icon(Icons.add),
         ),
       body: content(),
