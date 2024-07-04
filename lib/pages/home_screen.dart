@@ -1,13 +1,42 @@
+
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/add_form.dart';
 import 'package:flutter_app/pages/SelectClothesScreen.dart';
 import 'package:flutter_app/pages/calendar_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../models/Outfit.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  Future<Outfit?> getDateOutfitForToday() async {
+    DateTime today = DateTime.now();
+    DateTime startOfDay = DateTime(today.year, today.month, today.day);
+    DateTime endOfDay = DateTime(today.year, today.month, today.day, 23, 59, 59);
+
+    var snapshots = await FirebaseFirestore.instance
+        .collection('dateOutfits')
+        .where('date', isGreaterThanOrEqualTo: startOfDay.toIso8601String())
+        .where('date', isLessThanOrEqualTo: endOfDay.toIso8601String())
+        .get();
+
+    if (snapshots.docs.isNotEmpty) {
+      String outfitId = snapshots.docs.first.data()['outfitId'] as String;
+      var outfitSnapshot = await FirebaseFirestore.instance.collection('outfits').doc(outfitId).get();
+      if (outfitSnapshot.exists) {
+        return Outfit.fromMap(outfitSnapshot.data()! as Map<String, dynamic>, outfitSnapshot.id);
+      }
+    }
+    return null;
+  }
   Widget build(BuildContext context) {
     // Dados mockados do usuário
     final String userName = 'Usuário Mock';
