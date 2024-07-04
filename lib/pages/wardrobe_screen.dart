@@ -277,22 +277,3 @@ Outfit _getOutfitById(String outfitId, List<Outfit> outfits) {
     throw Exception('Outfit not found');
   }
 }
-/*class Look {
-  final String id;
-  final String name;
-  final List<String> itemIds;
-
-  Look({
-    required this.id,
-    required this.name,
-    required this.itemIds,
-  });
-
-  factory Look.fromMap(Map<String, dynamic> map, String id) {
-    return Look(
-      id: id,
-      name: map['name'],
-      itemIds: List<String>.from(map['itemIds']),
-    );
-  }
-}*/

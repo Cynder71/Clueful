@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/models/Item.dart';
 import 'package:flutter_app/models/Outfit.dart';
 import 'package:flutter_app/pages/SelectClothesScreen.dart';
-import 'package:flutter_app/pages/wardrobe_screen.dart';
+//import 'package:flutter_app/pages/wardrobe_screen.dart';
+import 'package:flutter_app/pages/navigation_page.dart';
 import 'package:flutter_app/backend/OutfitController.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -71,7 +72,8 @@ class EditOutfitScreenState extends State<EditOutfitScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const WardrobeScreen(),
+          builder: (context) =>
+              const NavigationPage(), //const WardrobeScreen(),
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(
@@ -197,15 +199,23 @@ class EditOutfitScreenState extends State<EditOutfitScreen> {
                   );
                 }).toList(),
               ),
-              const SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: _editItems,
-                child: const Text('Editar Roupas'),
-              ),
-              const SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: _saveOutfit,
-                child: const Text('Salvar Outfit'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const SizedBox(height: 20.0),
+                    ElevatedButton(
+                      onPressed: _editItems,
+                      child: const Text('Editar Roupas'),
+                    ),
+                    const SizedBox(height: 20.0),
+                    ElevatedButton(
+                      onPressed: _saveOutfit,
+                      child: const Text('Salvar Outfit'),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

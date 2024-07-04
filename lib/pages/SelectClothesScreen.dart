@@ -142,29 +142,39 @@ class SelectClothesScreenState extends State<SelectClothesScreen> {
           color: Color.fromARGB(255, 241, 221, 207),
         ),
         onPressed: () {
-          if (widget.origin == 'ChoicePage') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CreateOutfitScreen(
-                  selectedItems: selectedItemsIds.map((id) {
-                    return items.firstWhere((item) => item.id == id);
-                  }).toList(),
-                ),
+          if (selectedItemsIds.isEmpty) {
+            // Exibe um Snackbar se nenhum item estiver selecionado
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Selecione pelo menos um item.'),
+                duration: Duration(seconds: 2),
               ),
             );
-          } else if (widget.origin == 'EditOutfitScreen') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditOutfitScreen(
-                  outfit: widget.outfit!, // Passa o outfit atual
-                  selectedItems: selectedItemsIds.map((id) {
-                    return items.firstWhere((item) => item.id == id);
-                  }).toList(), // Passa os itens selecionados
+          } else {
+            if (widget.origin == 'ChoicePage') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateOutfitScreen(
+                    selectedItems: selectedItemsIds.map((id) {
+                      return items.firstWhere((item) => item.id == id);
+                    }).toList(),
+                  ),
                 ),
-              ),
-            );
+              );
+            } else if (widget.origin == 'EditOutfitScreen') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditOutfitScreen(
+                    outfit: widget.outfit!, // Passa o outfit atual
+                    selectedItems: selectedItemsIds.map((id) {
+                      return items.firstWhere((item) => item.id == id);
+                    }).toList(), // Passa os itens selecionados
+                  ),
+                ),
+              );
+            }
           }
         },
       ),
