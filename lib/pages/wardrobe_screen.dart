@@ -3,8 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/models/Item.dart';
 import 'package:flutter_app/pages/item_detail_screen.dart';
 import 'package:flutter_app/pages/look_detail_screen.dart';
-import 'package:flutter_app/backend/OutfitController.dart';
-import 'package:flutter_app/models/Outfit.dart'; // Import necessário para LookDetailScreen
+import 'package:flutter_app/models/Outfit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WardrobeScreen extends StatelessWidget {
