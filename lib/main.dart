@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/auth.dart';
+import 'package:flutter_app/pages/login_screen.dart';
 import 'package:flutter_app/pages/navigation_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Animated Bottom Bar',
       debugShowCheckedModeBanner: false,
-      home: NavigationPage(),
+      home: AuthPage(),
     );
   }
 }
