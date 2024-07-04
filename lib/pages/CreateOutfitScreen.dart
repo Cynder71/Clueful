@@ -21,81 +21,76 @@ class CreateOutfitScreenState extends State<CreateOutfitScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 241, 221, 207),
-      appBar: AppBar(
-        title: Text(
-          'Criar Outfit',
-          style: GoogleFonts.cinzel(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
+        backgroundColor: const Color.fromARGB(255, 241, 221, 207),
+        appBar: AppBar(
+          title: Text(
+            'Criar Outfit',
+            style: GoogleFonts.cinzel(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 58, 25, 52),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          color: const Color.fromARGB(255, 241, 221, 207),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
+          backgroundColor: const Color.fromARGB(255, 58, 25, 52),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
             color: const Color.fromARGB(255, 241, 221, 207),
-            onPressed: _saveOutfit,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Carousel Slider para exibir imagens selecionadas
-          CarouselSlider(
-            options: CarouselOptions(
-              aspectRatio: 16 / 9,
-              viewportFraction: 0.8,
-              initialPage: 0,
-              enableInfiniteScroll: false,
-              reverse: false,
-              autoPlay: false,
-              autoPlayInterval: const Duration(seconds: 3),
-              autoPlayAnimationDuration: const Duration(milliseconds: 800),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: true,
-              scrollDirection: Axis.horizontal,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.save),
+              color: const Color.fromARGB(255, 241, 221, 207),
+              onPressed: _saveOutfit,
             ),
-            items: widget.selectedItems.map((item) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                    decoration: const BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: Image.network(
-                      item.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
+          ],
+        ),
+        body: SingleChildScrollView(
+            child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20.0),
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 400.0,
+                  enlargeCenterPage: true,
+                  enableInfiniteScroll: false,
+                ),
+                items: widget.selectedItems.map((item) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: const BoxDecoration(
+                          color: Colors.transparent,
+                        ),
+                        child: Image.network(
+                          item.imageUrl,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
                   );
-                },
-              );
-            }).toList(),
-          ),
-          // Campo para inserir o nome do outfit
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Nome do Outfit',
-                border: OutlineInputBorder(),
+                }).toList(),
               ),
-            ),
+              // Campo para inserir o nome do outfit
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Nome do Outfit',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        )));
   }
 
   void _saveOutfit() async {
