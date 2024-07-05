@@ -85,7 +85,7 @@ class _SignUpState extends State<SignUpScreen> {
           style: GoogleFonts.cinzel(
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: const Color.fromARGB(255, 0, 0, 0),
           ),
         ),
       ),

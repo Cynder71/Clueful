@@ -1,13 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/add_form.dart';
 import 'package:flutter_app/pages/SelectClothesScreen.dart';
+import 'package:flutter_app/pages/add_form.dart';
 import 'package:flutter_app/pages/calendar_screen.dart';
 import 'package:flutter_app/pages/look_detail_screen.dart';
 import 'package:flutter_app/pages/wardrobe_screen.dart';
-import '../models/Outfit.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import '../models/Item.dart';
+import '../models/Outfit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> fetchItems() async {
     var snapshots = await FirebaseFirestore.instance.collection('items').get();
     items = snapshots.docs
-        .map((doc) => Item.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .map((doc) => Item.fromMap(doc.data(), doc.id))
         .toList();
     setState(() {});
   }
@@ -55,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
           .get();
       if (outfitSnapshot.exists) {
         return Outfit.fromMap(
-            outfitSnapshot.data()! as Map<String, dynamic>, outfitSnapshot.id);
+            outfitSnapshot.data()!, outfitSnapshot.id);
       }
     }
     return null;
@@ -78,26 +80,21 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 241, 221, 207),
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(userPhotoUrl),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  'Oi, $userName',
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
+      title: Padding(
+        padding: const EdgeInsets.only(left: 20.0), // Adjust the padding as needed
+        child: Text(
+          'clueful',
+          style: GoogleFonts.cinzel(
+            textStyle: const TextStyle(
+              color: Colors.white,
+              fontSize: 35.0,
+              fontWeight: FontWeight.w600,
             ),
-            const SizedBox(),
-          ],
+          ),
         ),
-        backgroundColor: const Color.fromARGB(255, 58, 25, 52),
       ),
+      backgroundColor: const Color.fromARGB(255, 58, 25, 52),
+    ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

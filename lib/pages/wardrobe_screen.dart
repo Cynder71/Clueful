@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_app/models/Item.dart';
+import 'package:flutter_app/models/Outfit.dart';
 import 'package:flutter_app/pages/item_detail_screen.dart';
 import 'package:flutter_app/pages/look_detail_screen.dart';
-import 'package:flutter_app/models/Outfit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WardrobeScreen extends StatelessWidget {
@@ -16,16 +16,18 @@ class WardrobeScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 241, 221, 207),
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
-            'Meu Guarda-Roupa',
-            style: GoogleFonts.cinzel(
+            'Guarda-Roupa',
+            style: GoogleFonts.cinzelDecorative(
               color: const Color.fromARGB(255, 241, 221, 207),
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
+              fontSize: 25,
             ),
           ),
           backgroundColor: const Color.fromARGB(255, 58, 25, 52),
-          bottom: const TabBar(
-            tabs: [
+          bottom: TabBar(
+            tabs: const [
               Tab(
                 text: 'Roupas',
               ),
@@ -33,6 +35,22 @@ class WardrobeScreen extends StatelessWidget {
                 text: 'Looks',
               )
             ],
+            indicatorColor: const Color.fromARGB(255, 241, 221, 207),        
+            indicatorWeight: 4.0,                 
+            labelColor: const Color.fromARGB(255, 241, 221, 207),        
+            labelStyle: GoogleFonts.cinzelDecorative(
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.normal, 
+                  fontSize: 16.0,
+                ),
+              ),
+            unselectedLabelColor: const Color.fromARGB(255, 129, 129, 129),    // Color of the unselected labels
+            unselectedLabelStyle: GoogleFonts.cinzelDecorative(
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 14.0,
+            ),
+          ),
           ),
         ),
         body: TabBarView(

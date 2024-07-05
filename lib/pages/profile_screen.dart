@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/sign_up_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -38,7 +37,7 @@ class _ProfileState extends State<ProfileScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _icon(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 50),
             _info(),
             const SizedBox(height: 50),
             _logoutButton(),
@@ -61,14 +60,14 @@ class _ProfileState extends State<ProfileScreen> {
   Widget _info() {
     return Column(
       children: [
-        Text(
+         Text(
           "Email:",
-          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          style: GoogleFonts.cinzelDecorative(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         Text(
           user!.email ?? "",
-          style: TextStyle(color: Colors.white, fontSize: 16),
+          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ],
     );
