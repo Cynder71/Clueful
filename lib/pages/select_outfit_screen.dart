@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/models/Outfit.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SelectOutfitScreen extends StatelessWidget {
   final Function(Outfit) onSelect;
@@ -12,9 +13,18 @@ class SelectOutfitScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:  const Color.fromARGB(255, 241, 221, 207),
       appBar: AppBar(
-        title: Text('Selecionar Outfit'),
-        backgroundColor: Colors.deepPurple,
+        centerTitle: true,
+        title: Text(
+          'Escolha um Look',
+          style: GoogleFonts.cinzelDecorative(
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+            color:  const Color.fromARGB(255, 241, 221, 207),
+          ),
+          ),
+        backgroundColor:  const Color.fromARGB(255, 58, 25, 52),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('outfits').snapshots(),
