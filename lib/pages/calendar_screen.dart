@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/SelectClothesScreen.dart';
 import 'package:flutter_app/pages/event.dart';
 import 'package:flutter_app/pages/select_outfit_screen.dart';
-import 'package:flutter_app/pages/wardrobe_screen.dart';
+import 'package:flutter_app/pages/view_date_outfit_details.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -21,20 +20,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  Set<DateTime> _outfitDates = {};
+  Set<String> _outfitsIds = {};
 
   Map<DateTime, List<Event>> events = {};
 
   late final ValueNotifier<List<Event>> _selectedEvents;
-  
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay){
-    if(!isSameDay(_selectedDay, selectedDay)){
-      setState(() {
-        _selectedDay = selectedDay;
-        _focusedDay = focusedDay;
-        _selectedEvents.value = _getEventsForDay(selectedDay);
-      });
-    }
+    setState(() {
+      _selectedDay = selectedDay;
+      _focusedDay = focusedDay;
+    });
   }
 
   void _selectOutfitForDate() {
@@ -72,18 +69,55 @@ class _CalendarScreenState extends State<CalendarScreen> {
     });
   }
 
+  void _loadOutfitDatesAndIds() async {
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('dateOutfits').get();
+      Set<DateTime> loadedDates = {};
+      Set<String> loadedIds = {};
+      for (var doc in snapshot.docs) {
+        var data = doc.data() as Map<String, dynamic>?;
+        if (data != null && data['date'] is String && data['outfitId'] is String) {
+          DateTime date = DateTime.parse(data['date']);
+          loadedDates.add(date);
+          loadedIds.add(data['outfitId']);
+        }
+      }
+      setState(() {
+        _outfitDates = loadedDates;
+        _outfitsIds = loadedIds;
+      });
+      print('Loaded outfit dates: $_outfitDates');
+    } catch (error) {
+      print('Error loading outfit dates: $error');
+    }
+  }
 
+  void _viewOutfitForDate(DateTime date) {
+    FirebaseFirestore.instance
+        .collection('dateOutfits')
+        .where('date', isEqualTo: date.toIso8601String())
+        .limit(1)
+        .get()
+        .then((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        var doc = snapshot.docs.first;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ViewDateOutfitScreen(dateOutfitId: doc.id),
+          ),
+        );
+      }
+    });
+  }
 
 
   @override
   void initState(){
     super.initState();
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay));
-  }
-
-  List<Event> _getEventsForDay(DateTime? day){
-    return events[day]?? [];
+    _selectedEvents = ValueNotifier([]);
+    _loadOutfitDatesAndIds();
   }
 
   @override
@@ -106,7 +140,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _selectOutfitForDate,
         child:const Icon(Icons.add),
-        ),
+      ),
       body: content(),
     );
   }
@@ -119,40 +153,46 @@ class _CalendarScreenState extends State<CalendarScreen> {
           TableCalendar(
             rowHeight: 50,
             headerStyle: const HeaderStyle(
-              formatButtonVisible: false, 
-              titleCentered: true),
+                formatButtonVisible: false,
+                titleCentered: true),
             availableGestures: AvailableGestures.all,
             selectedDayPredicate: (day)=>isSameDay(day, _focusedDay),
-            focusedDay: _focusedDay, 
-            firstDay: DateTime.utc(2024,07,03), 
+            focusedDay: _focusedDay,
+            firstDay: DateTime.utc(2024,07,03),
             lastDay: DateTime.utc(2030,01,01),
             onDaySelected: _onDaySelected,
-            eventLoader: _getEventsForDay,
+            eventLoader: (day) {
+              return _outfitDates.contains(day) ? [true] : [];
+            },
+            calendarBuilders: CalendarBuilders(
+                markerBuilder: (context, date, events) {
+                  if (events.isNotEmpty) {
+                    return Positioned(bottom: 1,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.blue
+                          ),
+                          width: 5,
+                          height: 5,
+                        )
+                    );
+                  }
+                  return null;
+                }
             ),
+          ),
 
-            const SizedBox(height: 8.0),
-            Expanded(
-              child: ValueListenableBuilder<List<Event>>(
-                valueListenable: _selectedEvents, builder : (context, value, _) {
-                  return ListView.builder(
-                    itemCount: value.length,
-                    itemBuilder: (context, index){
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(12)
-                        ),
-                        child : ListTile(
-                          onTap: ()=> print(""),
-                          title: Text('${value[index ]}')
-                        ),
-                      );
-                    }
-                  );
-                } 
-              ),
-            ),         
+          const SizedBox(height: 8.0),
+          if (_outfitDates.contains(_selectedDay))
+            ElevatedButton(
+              onPressed: () {
+                if (_selectedDay != null) {
+                _viewOutfitForDate(_selectedDay!);
+                }
+              },
+              child: const Text('Ver Outfit'),
+            ),
         ],
       ),
     );
